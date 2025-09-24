@@ -71,6 +71,20 @@ namespace Grocery.App.ViewModels
         }
 
         [RelayCommand]
+        public void RemoveProduct(GroceryListItem item)
+        {
+            if (item == null || GroceryList == null) return;
+
+            var deleted = _groceryListItemsService.Delete(item);
+            if (deleted == null) return;
+
+            deleted.Product.Stock += deleted.Amount;
+            _productService.Update(deleted.Product);
+            OnGroceryListChanged(GroceryList);
+        }
+
+
+        [RelayCommand]
         public async Task ShareGroceryList(CancellationToken cancellationToken)
         {
             if (GroceryList == null || MyGroceryListItems == null) return;

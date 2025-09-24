@@ -9,4 +9,9 @@ public partial class GroceryListItemsView : ContentPage
 		InitializeComponent();
         BindingContext = viewModel;
     }
+    private void OnGroceryItemSelected(object sender, SelectionChangedEventArgs e)
+    {
+        ((CollectionView)sender).SelectedItem = null;
+    }
+
 }

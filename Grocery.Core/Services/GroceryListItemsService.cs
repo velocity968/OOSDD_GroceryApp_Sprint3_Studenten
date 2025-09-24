@@ -36,8 +36,13 @@ namespace Grocery.Core.Services
 
         public GroceryListItem? Delete(GroceryListItem item)
         {
-            throw new NotImplementedException();
+            var deleted = _groceriesRepository.Delete(item);
+            if (deleted == null) return null;
+
+            deleted.Product = _productRepository.Get(deleted.ProductId) ?? new(0, "", 0);
+            return deleted;
         }
+
 
         public GroceryListItem? Get(int id)
         {
